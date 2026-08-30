@@ -3,87 +3,245 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no" />
-<meta name="theme-color" content="#b9b9b5" />
-<title>One Letter Elsewhere — Adaptive Keyboard Study</title>
+<meta name="theme-color" content="#e7efff" />
+<title>One Letter Elsewhere — Floating Membrane V37</title>
 <style>
-:root{--ink:#151515;--canvas:#b9b9b5;--paper:#efefeb;--muted:#666;--ease:cubic-bezier(.5,0,.2,1)}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--canvas);color:var(--ink);font-family:"Courier New",ui-monospace,Menlo,monospace}button{font:inherit}
-body:after{content:"";position:fixed;inset:0;pointer-events:none;opacity:.18;mix-blend-mode:multiply;background-image:radial-gradient(circle at 17% 23%,rgba(0,0,0,.2) 0 .45px,transparent .7px),radial-gradient(circle at 71% 64%,rgba(0,0,0,.14) 0 .5px,transparent .8px);background-size:7px 9px,11px 13px}
-.scene{min-height:100dvh;padding:22px clamp(16px,4vw,42px);display:grid;grid-template-rows:auto 1fr auto;gap:14px;background:radial-gradient(ellipse at 50% 42%,#e4e4e0 0,#cececa 58%,#b4b4b0 100%)}
-.top,.footer{position:relative;z-index:3;color:#50504e;font-size:10px;letter-spacing:.14em;text-transform:uppercase}.top{display:flex;justify-content:space-between;gap:18px}.top div:last-child{text-align:right}.footer{display:flex;justify-content:space-between;align-items:center;gap:12px}
-.main{display:grid;place-items:center;min-height:0}.stage{width:min(720px,100%);display:grid;justify-items:center;gap:18px}
-.paper{width:min(600px,92vw);min-height:210px;padding:40px 34px 54px;border:1px solid rgba(0,0,0,.19);background-color:var(--paper);background-image:radial-gradient(circle at 18% 22%,rgba(0,0,0,.055) 0 1px,transparent 1.4px),repeating-linear-gradient(87deg,rgba(255,255,255,.12) 0 1px,rgba(0,0,0,.018) 1px 2px,transparent 2px 7px);background-size:17px 19px,auto;box-shadow:0 2px 0 rgba(255,255,255,.5),0 13px 28px rgba(0,0,0,.22);position:relative;overflow:hidden}
-.paper:before{content:"typing sample / no correction";position:absolute;top:17px;left:22px;color:#777;font-size:9px;letter-spacing:.16em;text-transform:uppercase}.typed{min-height:1.3em;margin-top:20px;overflow-wrap:anywhere;color:#232019;font-size:clamp(28px,6vw,48px);font-weight:700;letter-spacing:.1em;text-transform:lowercase}.typed .caret{display:inline-block;width:.5em;animation:blink .8s steps(1) infinite}@keyframes blink{50%{opacity:0}}
-.prompt{margin-top:20px;color:#5b5b58;font-size:11px;line-height:1.6}.prompt strong{color:#222}.stats{margin-top:10px;color:#777;font-size:10px;letter-spacing:.05em}
-.typewriter{width:min(700px,98vw);padding:20px 14px 24px;border:1px solid #111;border-radius:16px 16px 10px 10px;background:linear-gradient(150deg,#4b4b49,#20201f 68%);box-shadow:0 22px 46px rgba(0,0,0,.38),inset 0 2px 0 rgba(255,255,255,.1);touch-action:none}.keys{display:grid;gap:10px}.row{display:flex;justify-content:center;gap:clamp(5px,1.4vw,9px)}.row:nth-child(2){padding-left:4%}.row:nth-child(3){padding-left:10%}
-.key{--mx:0px;--my:0px;--sx:1;--sy:1;position:relative;display:grid;place-items:center;width:clamp(30px,8.6vw,48px);height:clamp(38px,10.5vw,52px);padding:0;border:2px solid #111;border-radius:46% 46% 42% 42%;color:#181818;background:radial-gradient(circle at 35% 30%,#eeeeea,#c6c6c1 60%,#8b8b87);box-shadow:0 5px 0 #111;font-size:clamp(12px,3.4vw,16px);font-weight:700;text-transform:uppercase;user-select:none;-webkit-user-select:none;transform:translate(var(--mx),var(--my)) scale(var(--sx),var(--sy));transition:transform .6s var(--ease),width .6s var(--ease),height .6s var(--ease),box-shadow .08s}.key.down{box-shadow:0 1px 0 #111;transform:translate(var(--mx),calc(var(--my) + 4px)) scale(var(--sx),var(--sy))}.key:after{content:"";position:absolute;width:9px;height:9px;border:1px solid rgba(0,0,0,.45);border-radius:50%;left:calc(var(--tx,50%) - 4.5px);top:calc(var(--ty,50%) - 4.5px);opacity:var(--touch-opacity,0);transition:opacity .4s;pointer-events:none}.utility{width:auto;min-width:54px;padding:0 14px;color:#eee;background:radial-gradient(circle at 35% 30%,#696967,#343433);border-radius:12px}
-.controls{display:flex;justify-content:center;flex-wrap:wrap;gap:10px}.control{border:1px solid #555;background:rgba(239,239,235,.78);color:#333;padding:8px 11px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}.control[aria-pressed="true"]{background:#222;color:#eee}
-.memory{width:min(600px,92vw);display:none;padding:14px 16px;border:1px solid rgba(0,0,0,.24);background:rgba(239,239,235,.78);box-shadow:5px 6px 0 rgba(0,0,0,.09)}.memory.on{display:block}.memory-title{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:#666;margin-bottom:10px}.memory-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}.memory-cell{min-height:56px;border:1px solid rgba(0,0,0,.15);padding:6px;font-size:9px;color:#555}.memory-cell b{display:block;color:#111;font-size:13px;margin-bottom:3px}.arrow{font-size:15px;color:#222}.empty{opacity:.35}
-@media(max-width:600px){.scene{padding:14px 10px}.top{display:block;padding:0 6px}.top div:last-child{text-align:left;margin-top:5px}.paper{min-height:170px;padding:34px 20px 40px}.typewriter{padding:17px 7px 20px}.keys{gap:8px}.row{gap:5px}.key{width:8.9vw;height:11.4vw;min-width:29px;min-height:39px}.utility{min-width:49px;padding:0 10px}.memory-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.footer{padding:0 6px;align-items:flex-end}}
-@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+:root{
+  --bg0:#f6f7fb;
+  --bg1:#eef5ff;
+  --bg2:#d7f0ff;
+  --bg3:#e7dcff;
+  --ink:#17334a;
+  --label:#0f3149;
+  --label-typed:#1d435d;
+  --muted:rgba(23,51,74,.54);
+  --white:rgba(255,255,255,.52);
+  --line:rgba(255,255,255,.62);
+  --shadow:0 10px 34px rgba(53,102,145,.12), 0 2px 10px rgba(53,102,145,.06);
+  --ease:cubic-bezier(.22,.8,.24,1);
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink)}
+body{
+  background:
+    radial-gradient(48vw 40vw at 76% 28%, rgba(31,94,255,.20), transparent 58%),
+    radial-gradient(52vw 42vw at 21% 74%, rgba(164,127,255,.18), transparent 56%),
+    radial-gradient(44vw 38vw at 36% 24%, rgba(49,211,255,.18), transparent 55%),
+    linear-gradient(160deg, var(--bg0), var(--bg1) 34%, #eef6ff 52%, var(--bg2) 75%, var(--bg3));
+  overflow-x:hidden;
+}
+body:before, body:after{
+  content:"";position:fixed;inset:auto;pointer-events:none;z-index:0;border-radius:50%;filter:blur(24px);opacity:.62;
+}
+body:before{width:48vw;height:48vw;left:-10vw;top:-10vw;background:radial-gradient(circle, rgba(89,225,255,.22), transparent 68%)}
+body:after{width:54vw;height:54vw;right:-15vw;bottom:-18vw;background:radial-gradient(circle, rgba(122,97,255,.20), transparent 68%)}
+.shell{position:relative;z-index:1;min-height:100dvh;padding:22px 14px calc(18px + env(safe-area-inset-bottom));display:grid;grid-template-rows:1fr auto auto;gap:16px;max-width:740px;margin:0 auto}
+.topbar{display:flex;justify-content:flex-end;gap:10px;align-items:center}
+.icon-btn{
+  width:40px;height:40px;border:none;border-radius:999px;cursor:pointer;color:var(--ink);
+  background:linear-gradient(180deg, rgba(255,255,255,.62), rgba(255,255,255,.30));
+  border:1px solid var(--line);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:var(--shadow);
+}
+.display-wrap{display:grid;align-content:end;justify-items:center;padding-top:6vh}
+.typed-layer{
+  width:min(92vw,620px);min-height:148px;padding:18px 6px 10px;text-align:center;position:relative;
+}
+.typed-layer:before{
+  content:"";position:absolute;inset:14px 0 auto 0;margin:auto;width:min(76vw,520px);height:110px;border-radius:999px;
+  background:radial-gradient(circle at 50% 50%, rgba(255,255,255,.34), rgba(255,255,255,.08) 60%, transparent 78%);
+  filter:blur(10px);pointer-events:none;
+}
+.typed{
+  position:relative;z-index:1;min-height:2.3em;line-height:1.08;letter-spacing:-.045em;word-break:break-word;
+  font-size:clamp(34px,9vw,68px);font-weight:700;color:var(--label-typed);
+  text-shadow:
+    0 1px 0 rgba(255,255,255,.46),
+    0 0 10px rgba(122,97,255,.04),
+    0 5px 12px rgba(23,51,74,.05);
+  -webkit-text-stroke: 0 rgba(255,255,255,0);
+}
+.caret{display:inline-block;margin-left:6px;opacity:.66;animation:blink .8s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.keyboard-area{display:grid;justify-items:center;align-content:end}
+.keys{
+  display:grid;gap:10px;touch-action:none;position:relative;padding:6px 2px 0;
+}
+.row{display:flex;justify-content:center;gap:8px}.row:nth-child(2){padding-left:3.2%}.row:nth-child(3){padding-left:7.2%}
+.key{
+  --mx:0px;--my:0px;--press:0px;--tiltX:0deg;--tiltY:0deg;--tx:50%;--ty:50%;--mist:0;
+  position:relative;display:grid;place-items:center;width:8.85vw;min-width:32px;max-width:54px;height:11.8vw;min-height:44px;max-height:62px;
+  border:none;border-radius:20px;padding:0;color:rgba(255,255,255,.18);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.42) 0%, rgba(224,242,255,.20) 46%, rgba(144,187,221,.10) 100%);
+  border:1px solid rgba(116,157,190,.30);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.96),
+    inset 1px 0 0 rgba(255,255,255,.48),
+    inset -1px 0 0 rgba(67,109,148,.10),
+    inset 0 -8px 14px rgba(40,91,133,.16),
+    inset 0 -1px 0 rgba(42,88,126,.20),
+    0 9px 14px rgba(55,95,128,.14),
+    0 2px 4px rgba(43,82,112,.10);
+  backdrop-filter:blur(15px) saturate(1.08);-webkit-backdrop-filter:blur(15px) saturate(1.08);
+  transform:translate(var(--mx),var(--my)) translateY(var(--press)) perspective(180px) rotateX(var(--tiltX)) rotateY(var(--tiltY));
+  transition:transform .55s var(--ease), box-shadow .24s, background .24s, border-color .24s;
+  user-select:none;-webkit-user-select:none;overflow:hidden;
+}
+.key:before{
+  content:"";position:absolute;inset:1px;border-radius:19px;
+  background:linear-gradient(165deg, rgba(255,255,255,.52) 0%, rgba(255,255,255,.10) 34%, rgba(103,163,204,.035) 70%, rgba(47,91,126,.055) 100%);pointer-events:none;
+}
+.key:after{
+  content:"";position:absolute;left:calc(var(--tx) - 60px);top:calc(var(--ty) - 60px);width:120px;height:120px;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,
+    rgba(88,242,255,.56) 0%,
+    rgba(55,172,255,.44) 20%,
+    rgba(39,88,255,.40) 42%,
+    rgba(106,86,255,.34) 58%,
+    rgba(177,136,255,.22) 74%,
+    rgba(255,255,255,0) 82%);
+  opacity:var(--touch-opacity,0);transform:scale(.55);transition:opacity .42s, transform .42s;mix-blend-mode:screen;
+}
+.key .mist{
+  position:absolute;inset:-12px;border-radius:26px;pointer-events:none;opacity:var(--mist);
+  background:radial-gradient(circle at 50% 55%, rgba(69,219,255,.16), rgba(58,110,255,.14) 38%, rgba(132,92,255,.11) 58%, transparent 74%);
+  filter:blur(8px);
+}
+.key .label{
+  position:relative;z-index:1;font-size:15px;font-weight:700;letter-spacing:-.01em;
+  color:var(--label);
+  text-shadow:
+    0 1px 0 rgba(255,255,255,.34),
+    0 2px 6px rgba(46,95,129,.04);
+  -webkit-text-stroke:0 rgba(255,255,255,0);
+}
+.key.down{
+  --press:3px;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.92),
+    inset 0 -10px 18px rgba(39,87,129,.20),
+    inset 0 0 0 1px rgba(75,125,163,.10),
+    0 4px 8px rgba(48,88,118,.10);
+}
+.key.down:after{transform:scale(1.08)}
+.key.utility{width:auto;min-width:62px;padding-inline:12px}
+.key.utility.space{min-width:118px}
+.actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.action{
+  border:none;cursor:pointer;padding:11px 14px;border-radius:999px;color:var(--ink);
+  background:linear-gradient(180deg, rgba(255,255,255,.60), rgba(255,255,255,.28));border:1px solid var(--line);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:var(--shadow);
+}
+.sheet-backdrop{position:fixed;inset:0;background:rgba(21,42,64,.16);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);opacity:0;pointer-events:none;transition:opacity .25s;z-index:20}
+.sheet-backdrop.open{opacity:1;pointer-events:auto}
+.sheet{
+  position:fixed;left:0;right:0;bottom:0;z-index:21;transform:translateY(102%);transition:transform .34s var(--ease);
+  padding:12px 12px calc(16px + env(safe-area-inset-bottom));max-height:80dvh;overflow:auto;
+  background:linear-gradient(180deg, rgba(249,253,255,.92), rgba(238,245,255,.90));border-top:1px solid rgba(255,255,255,.82);
+  border-radius:28px 28px 0 0;box-shadow:0 -18px 44px rgba(53,102,145,.16);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+}
+.sheet.open{transform:translateY(0)}
+.grab{width:42px;height:5px;border-radius:999px;background:rgba(23,51,74,.16);margin:0 auto 10px}
+.sheet-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
+.sheet-title{font-size:18px;font-weight:670;letter-spacing:-.03em}
+.close{border:none;background:rgba(255,255,255,.58);border:1px solid rgba(255,255,255,.8);padding:9px 12px;border-radius:999px;color:var(--ink)}
+.mini-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:12px}
+.metric{padding:10px 11px;border-radius:18px;background:rgba(255,255,255,.52);border:1px solid rgba(255,255,255,.76)}
+.metric .k{font-size:10px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase}
+.metric .v{margin-top:4px;font-size:20px;font-weight:700;letter-spacing:-.04em}
+.map-board{display:grid;gap:8px;padding:12px;border-radius:22px;background:rgba(255,255,255,.48);border:1px solid rgba(255,255,255,.8)}
+.map-row{display:flex;justify-content:center;gap:8px}.map-row:nth-child(2){padding-left:3.2%}.map-row:nth-child(3){padding-left:7.2%}
+.map-key{position:relative;width:8.85vw;min-width:32px;max-width:54px;height:11.8vw;min-height:44px;max-height:62px;border-radius:20px;background:linear-gradient(180deg, rgba(255,255,255,.76), rgba(255,255,255,.28));border:1px solid rgba(255,255,255,.82);overflow:hidden}
+.map-key.empty{opacity:.34}
+.map-key .label{position:absolute;left:8px;top:7px;font-size:11px;font-weight:700;color:rgba(23,51,74,.82)}
+.map-key .count{position:absolute;right:7px;bottom:6px;font-size:9px;color:var(--muted)}
+.origin,.mean,.trail,.vector{position:absolute;display:block}
+.origin{width:10px;height:10px;border-radius:50%;border:2px solid rgba(23,51,74,.34);left:calc(50% - 5px);top:calc(50% - 5px);background:rgba(255,255,255,.45)}
+.mean{width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg, rgba(77,232,255,.94), rgba(62,108,255,.94) 48%, rgba(160,114,255,.92));box-shadow:0 0 0 4px rgba(62,108,255,.08)}
+.trail{width:6px;height:6px;border-radius:50%;background:rgba(60,192,255,.30);transform:translate(-50%,-50%)}
+.vector{height:2px;left:50%;top:50%;transform-origin:left center;background:linear-gradient(90deg, rgba(62,108,255,.06), rgba(62,108,255,.8))}
+@media (min-width:700px){.key,.map-key{width:54px;height:62px}}
 </style>
 </head>
 <body>
-<section class="scene">
-  <div class="top"><div>one letter elsewhere / adaptive keyboard study</div><div>the keyboard remembers where your fingers actually land</div></div>
-  <main class="main"><div class="stage">
-    <section class="paper" aria-live="polite">
+<div class="shell">
+  <div class="topbar">
+    <button id="openMap" class="icon-btn" type="button" aria-label="Body map">◎</button>
+  </div>
+
+  <div class="display-wrap">
+    <div class="typed-layer">
       <div id="typed" class="typed"><span class="caret">▌</span></div>
-      <div class="prompt">先正常打，不要刻意瞄準鍵中央。鍵盤只學習你的<strong>實際落點</strong>，不再替你把字母飄移到別的世界。</div>
-      <div id="stats" class="stats">0 touches remembered</div>
-    </section>
-    <div class="typewriter"><div id="keys" class="keys"></div></div>
-    <div class="controls">
-      <button id="memoryToggle" class="control" type="button" aria-pressed="false">keyboard memory</button>
-      <button id="clearText" class="control" type="button">clear text</button>
-      <button id="resetMemory" class="control" type="button">reset memory</button>
     </div>
-    <section id="memory" class="memory"><div class="memory-title">body map / average landing point</div><div id="memoryGrid" class="memory-grid"></div></section>
-  </div></main>
-  <div class="footer"><span>procedural memory / co-adaptation</span><span id="status">memory stored on this device</span></div>
+  </div>
+
+  <div class="keyboard-area">
+    <div id="keys" class="keys"></div>
+    <div class="actions" style="margin-top:18px;">
+      <button id="clearText" class="action" type="button">Clear</button>
+      <button id="resetMemory" class="action" type="button">Reset</button>
+    </div>
+  </div>
+</div>
+
+<div id="sheetBackdrop" class="sheet-backdrop"></div>
+<section id="mapSheet" class="sheet">
+  <div class="grab"></div>
+  <div class="sheet-head">
+    <div class="sheet-title">Body Map</div>
+    <button id="closeMap" class="close" type="button">close</button>
+  </div>
+  <div class="mini-metrics">
+    <div class="metric"><div class="k">touches</div><div class="v" id="metricTouches">0</div></div>
+    <div class="metric"><div class="k">active keys</div><div class="v" id="metricActive">0</div></div>
+    <div class="metric"><div class="k">largest shift</div><div class="v" id="metricShift">0</div></div>
+  </div>
+  <div id="mapBoard" class="map-board"></div>
 </section>
+
 <script>
 const ROWS=['qwertyuiop','asdfghjkl','zxcvbnm'];
 const STORAGE='ole-adaptive-keyboard-v1';
-const MAX_SHIFT=9;       // px: visible, but not enough to destroy learned layout
-const GAIN=.42;          // adaptation gain from average normalized landing point
-const MIN_SAMPLES=2;     // movement begins after the second touch
+const MAX_SHIFT=9;
+const GAIN=.42;
+const MIN_SAMPLES=2;
+const TRAIL_KEEP=12;
 const keys={};
 let text='';
 let active=new Map();
 let profile=loadProfile();
+let lastTouch=null;
 
-function loadProfile(){
-  try{return JSON.parse(localStorage.getItem(STORAGE)||'{}')}catch(e){return {}}
-}
-function saveProfile(){
-  try{localStorage.setItem(STORAGE,JSON.stringify(profile));document.getElementById('status').textContent='memory saved on this device'}catch(e){document.getElementById('status').textContent='memory active for this session'}
-}
-function ensure(ch){return profile[ch]||(profile[ch]={n:0,dx:0,dy:0,absx:0,absy:0,meanDuration:0})}
+function loadProfile(){try{return JSON.parse(localStorage.getItem(STORAGE)||'{}')}catch(e){return {}}}
+function saveProfile(){try{localStorage.setItem(STORAGE,JSON.stringify(profile))}catch(e){}}
+function ensure(ch){return profile[ch]||(profile[ch]={n:0,dx:0,dy:0,absx:0,absy:0,meanDuration:0,samples:[]})}
 function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
-function arrow(dx,dy){
-  if(Math.hypot(dx,dy)<.08)return '·';
-  const a=Math.atan2(dy,dx), oct=Math.round(a/(Math.PI/4));
-  return ['→','↘','↓','↙','←','↖','↑','↗','→'][oct<0?oct+8:oct];
-}
-function build(){
+function dist(p){return p?Math.hypot(p.dx||0,p.dy||0):0}
+function escapeHtml(s){return s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))}
+function shiftPx(p,ch){const b=keys[ch];if(!p||!b||p.n<MIN_SAMPLES)return{x:0,y:0};return{x:clamp(p.dx*b.offsetWidth*GAIN,-MAX_SHIFT,MAX_SHIFT),y:clamp(p.dy*b.offsetHeight*GAIN,-MAX_SHIFT,MAX_SHIFT)}}
+
+function buildKeyboard(){
   const wrap=document.getElementById('keys');
   ROWS.forEach((row,ri)=>{
     const line=document.createElement('div');line.className='row';
     [...row].forEach(ch=>{
-      const b=document.createElement('button');b.type='button';b.className='key';b.dataset.char=ch;b.textContent=ch;b.setAttribute('aria-label',ch.toUpperCase());keys[ch]=b;line.appendChild(b);
+      const b=document.createElement('button');
+      b.type='button';b.className='key';b.dataset.char=ch;
+      b.innerHTML='<span class="mist"></span><span class="label">'+ch+'</span>';
+      b.setAttribute('aria-label',ch.toUpperCase());
+      keys[ch]=b; line.appendChild(b); bindKey(ch,b);
     });
     if(ri===2){
-      const back=document.createElement('button');back.type='button';back.className='key utility';back.id='back';back.textContent='⌫';back.setAttribute('aria-label','delete');line.appendChild(back);
-      const space=document.createElement('button');space.type='button';space.className='key utility';space.id='space';space.textContent='space';space.setAttribute('aria-label','space');line.appendChild(space);
+      const back=document.createElement('button');back.type='button';back.className='key utility';back.id='back';back.innerHTML='<span class="mist"></span><span class="label">⌫</span>';line.appendChild(back);
+      const space=document.createElement('button');space.type='button';space.className='key utility space';space.id='space';space.innerHTML='<span class="mist"></span><span class="label">space</span>';line.appendChild(space);
     }
     wrap.appendChild(line);
   });
-  Object.entries(keys).forEach(([ch,b])=>bindKey(ch,b));
   document.getElementById('back').addEventListener('pointerdown',e=>{e.preventDefault();text=text.slice(0,-1);renderText()});
   document.getElementById('space').addEventListener('pointerdown',e=>{e.preventDefault();text+=' ';renderText()});
-  applyAll();renderMemory();updateStats();
+  applyAll();
 }
+
 function bindKey(ch,b){
   b.addEventListener('pointerdown',e=>{
     e.preventDefault();
@@ -91,48 +249,100 @@ function bindKey(ch,b){
     const r=b.getBoundingClientRect();
     const x=e.clientX-r.left,y=e.clientY-r.top;
     const dx=(x-r.width/2)/(r.width/2),dy=(y-r.height/2)/(r.height/2);
-    b.style.setProperty('--tx',`${clamp(x/r.width*100,0,100)}%`);b.style.setProperty('--ty',`${clamp(y/r.height*100,0,100)}%`);b.style.setProperty('--touch-opacity','1');
-    const sample={ch,dx,dy,t:performance.now()};active.set(e.pointerId,sample);b.classList.add('down');
-    learn(ch,dx,dy,0);text=(text+ch).slice(-80);renderText();
+    b.style.setProperty('--tx',`${clamp(x/r.width*100,0,100)}%`);
+    b.style.setProperty('--ty',`${clamp(y/r.height*100,0,100)}%`);
+    b.style.setProperty('--touch-opacity','1');
+    b.classList.add('down');
+    const tiltX=clamp(-dy*7,-7,7), tiltY=clamp(dx*7,-7,7);
+    b.style.setProperty('--tiltX', tiltX.toFixed(2)+'deg');
+    b.style.setProperty('--tiltY', tiltY.toFixed(2)+'deg');
+    active.set(e.pointerId,{ch,t:performance.now()});
+    learn(ch,dx,dy);
+    updateTouchGlow(ch,x,y);
+    text=(text+ch).slice(-100);
+    renderText();
+    lastTouch={time:performance.now(), ch, xNorm:dx, yNorm:dy};
   });
   const finish=e=>{
-    const s=active.get(e.pointerId);if(!s)return;active.delete(e.pointerId);b.classList.remove('down');b.style.setProperty('--touch-opacity','0');
-    const duration=performance.now()-s.t;learnDuration(ch,duration);renderMemory();updateStats();
+    const s=active.get(e.pointerId); if(!s)return;
+    active.delete(e.pointerId);
+    b.classList.remove('down');
+    b.style.setProperty('--touch-opacity','0');
+    b.style.setProperty('--tiltX','0deg');
+    b.style.setProperty('--tiltY','0deg');
+    learnDuration(ch, performance.now()-s.t);
+    renderAll();
   };
   b.addEventListener('pointerup',finish);b.addEventListener('pointercancel',finish);
 }
-function learn(ch,dx,dy){
-  const p=ensure(ch);p.n++;
-  p.dx+=(dx-p.dx)/p.n;p.dy+=(dy-p.dy)/p.n;
-  p.absx+=(Math.abs(dx)-p.absx)/p.n;p.absy+=(Math.abs(dy)-p.absy)/p.n;
-  saveProfile();applyKey(ch);renderMemory();updateStats();
+
+function updateTouchGlow(ch,x,y){
+  const p=ensure(ch);
+  const intensity=clamp(.1 + dist(p)*1.2, .12, .42);
+  keys[ch].style.setProperty('--mist', intensity.toFixed(2));
 }
-function learnDuration(ch,d){const p=ensure(ch);p.meanDuration+=(d-p.meanDuration)/Math.max(1,p.n);saveProfile()}
+function learn(ch,dx,dy){
+  const p=ensure(ch); p.n++;
+  p.dx+=(dx-p.dx)/p.n; p.dy+=(dy-p.dy)/p.n;
+  p.absx+=(Math.abs(dx)-p.absx)/p.n; p.absy+=(Math.abs(dy)-p.absy)/p.n;
+  p.samples.push([dx,dy]); if(p.samples.length>TRAIL_KEEP)p.samples.shift();
+  saveProfile(); applyKey(ch); renderAll();
+}
+function learnDuration(ch,d){const p=ensure(ch); p.meanDuration+=(d-p.meanDuration)/Math.max(1,p.n); saveProfile();}
 function applyKey(ch){
-  const b=keys[ch],p=profile[ch];if(!b||!p||p.n<MIN_SAMPLES){b?.style.setProperty('--mx','0px');b?.style.setProperty('--my','0px');return}
-  const sx=clamp(p.dx*b.offsetWidth*GAIN,-MAX_SHIFT,MAX_SHIFT),sy=clamp(p.dy*b.offsetHeight*GAIN,-MAX_SHIFT,MAX_SHIFT);
-  b.style.setProperty('--mx',`${sx.toFixed(2)}px`);b.style.setProperty('--my',`${sy.toFixed(2)}px`);
+  const b=keys[ch], p=profile[ch];
+  if(!b||!p||p.n<MIN_SAMPLES){ if(b){b.style.setProperty('--mx','0px'); b.style.setProperty('--my','0px'); b.style.setProperty('--mist','0')} return; }
+  const s=shiftPx(p,ch);
+  b.style.setProperty('--mx', `${s.x.toFixed(2)}px`);
+  b.style.setProperty('--my', `${s.y.toFixed(2)}px`);
+  const mist=clamp(.10 + dist(p)*.55, .08, .28);
+  b.style.setProperty('--mist', mist.toFixed(2));
 }
 function applyAll(){Object.keys(keys).forEach(applyKey)}
 function renderText(){document.getElementById('typed').innerHTML=`${escapeHtml(text)}<span class="caret">▌</span>`}
-function escapeHtml(s){return s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))}
-function updateStats(){const total=Object.values(profile).reduce((s,p)=>s+(p.n||0),0),trained=Object.values(profile).filter(p=>(p.n||0)>=MIN_SAMPLES).length;document.getElementById('stats').textContent=`${total} touches remembered · ${trained} keys adapting`}
-function renderMemory(){
-  const grid=document.getElementById('memoryGrid');grid.textContent='';
-  [...'abcdefghijklmnopqrstuvwxyz'].forEach(ch=>{
-    const p=profile[ch],c=document.createElement('div');c.className='memory-cell'+(!p||!p.n?' empty':'');
-    if(!p||!p.n)c.innerHTML=`<b>${ch.toUpperCase()}</b>no samples`;
-    else c.innerHTML=`<b>${ch.toUpperCase()}</b><span class="arrow">${arrow(p.dx,p.dy)}</span> ${p.n}×<br>avg ${Math.hypot(p.dx,p.dy).toFixed(2)}`;
-    grid.appendChild(c);
-  })
+
+function renderBodyMap(){
+  const board=document.getElementById('mapBoard'); board.textContent='';
+  ROWS.forEach(row=>{
+    const line=document.createElement('div'); line.className='map-row';
+    [...row].forEach(ch=>{
+      const p=profile[ch], cell=document.createElement('div'); cell.className='map-key'+(!p||!p.n?' empty':'');
+      cell.innerHTML=`<span class="label">${ch.toUpperCase()}</span><span class="origin"></span><span class="count">${p?.n||0}</span>`;
+      if(p&&p.n){
+        const mx=50+clamp(p.dx*34,-34,34), my=50+clamp(p.dy*34,-34,34);
+        const mean=document.createElement('span'); mean.className='mean'; mean.style.left=`calc(${mx}% - 5px)`; mean.style.top=`calc(${my}% - 5px)`; cell.appendChild(mean);
+        const dx=mx-50, dy=my-50, len=Math.hypot(dx,dy);
+        if(len>2){ const v=document.createElement('span'); v.className='vector'; v.style.width=`${len}%`; v.style.transform=`rotate(${Math.atan2(dy,dx)*180/Math.PI}deg)`; cell.appendChild(v); }
+        (p.samples||[]).forEach(([sx,sy])=>{ const d=document.createElement('span'); d.className='trail'; d.style.left=(50+clamp(sx*34,-34,34))+'%'; d.style.top=(50+clamp(sy*34,-34,34))+'%'; cell.appendChild(d); });
+      }
+      line.appendChild(cell);
+    });
+    board.appendChild(line);
+  });
 }
-document.getElementById('memoryToggle').onclick=()=>{const m=document.getElementById('memory'),b=document.getElementById('memoryToggle'),on=!m.classList.contains('on');m.classList.toggle('on',on);b.setAttribute('aria-pressed',String(on))};
-document.getElementById('clearText').onclick=()=>{text='';renderText()};
-document.getElementById('resetMemory').onclick=()=>{if(!confirm('Reset the keyboard memory on this device?'))return;profile={};saveProfile();applyAll();renderMemory();updateStats()};
-window.addEventListener('resize',applyAll);
-// Desktop physical keyboard can still add text, but only touches/clicks on the visible keys train the body map.
-document.addEventListener('keydown',e=>{if(e.metaKey||e.ctrlKey||e.altKey)return;if(/^[a-zA-Z]$/.test(e.key)){text=(text+e.key.toLowerCase()).slice(-80);renderText()}else if(e.key==='Backspace'){text=text.slice(0,-1);renderText()}else if(e.key===' '){text+=' ';renderText()}});
-build();renderText();
+function renderMetrics(){
+  const values=Object.values(profile).filter(p=>p&&p.n);
+  const total=values.reduce((s,p)=>s+(p.n||0),0);
+  const top=Object.entries(profile).filter(([,p])=>p&&p.n).sort((a,b)=>dist(b[1])-dist(a[1]))[0];
+  document.getElementById('metricTouches').textContent=total;
+  document.getElementById('metricActive').textContent=values.length;
+  document.getElementById('metricShift').textContent=top?dist(top[1]).toFixed(2):'0';
+}
+function renderAll(){renderMetrics();renderBodyMap()}
+function openMap(){document.getElementById('mapSheet').classList.add('open');document.getElementById('sheetBackdrop').classList.add('open')}
+function closeMap(){document.getElementById('mapSheet').classList.remove('open');document.getElementById('sheetBackdrop').classList.remove('open')}
+
+function bindUI(){
+  document.getElementById('clearText').addEventListener('click',()=>{text=''; renderText()});
+  document.getElementById('resetMemory').addEventListener('click',()=>{if(!confirm('Reset the keyboard memory on this device?'))return; profile={}; saveProfile(); applyAll(); renderAll()});
+  document.getElementById('openMap').addEventListener('click',openMap);
+  document.getElementById('closeMap').addEventListener('click',closeMap);
+  document.getElementById('sheetBackdrop').addEventListener('click',closeMap);
+  window.addEventListener('resize',()=>{applyAll(); renderAll()});
+  document.addEventListener('keydown',e=>{if(e.metaKey||e.ctrlKey||e.altKey)return; if(/^[a-zA-Z]$/.test(e.key)){text=(text+e.key.toLowerCase()).slice(-100); renderText()} else if(e.key==='Backspace'){text=text.slice(0,-1); renderText()} else if(e.key===' '){text+=' '; renderText()}})
+}
+
+buildKeyboard(); bindUI(); renderText(); renderAll();
 </script>
 </body>
 </html>
